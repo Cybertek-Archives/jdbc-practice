@@ -6,6 +6,9 @@ import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static io.restassured.RestAssured.*;
 import static org.testng.Assert.*;
 
@@ -123,7 +126,40 @@ public class SpartanTestWithParameters {
         assertTrue(response.body().asString().contains("Janette"));
     }
 
-    //break until 3:03
+    @Test
+    public void PositiveQueryParamTest3(){
+        //creating map and adding query parameters
+        Map<String,Object> paramsMap = new HashMap<>();
+        paramsMap.put("gender","Female");
+        paramsMap.put("nameContains","e");
+
+        Response response = given().accept(ContentType.JSON)
+                .and().queryParams(paramsMap).and()
+                .when().get("/spartans/search/");
+
+        assertEquals(response.statusCode(),200)        ;
+        assertEquals(response.contentType(),"application/json;charset=UTF-8");
+        assertTrue(response.body().asString().contains("Female"));
+        assertTrue(response.body().asString().contains("Janette"));
+    }
+
+    @Test
+    public void PositiveQueryParamTest4(){
+        //creating map and adding query parameters
+        Map<String,Object> paramsMap = new HashMap<>();
+        paramsMap.put("gender","Female");
+        paramsMap.put("nameContains","e");
+
+        Response response = given().accept(ContentType.JSON)
+                .and().queryParams("gender","Female","nameContains","e")
+                .when().get("/spartans/search");
+
+        assertEquals(response.statusCode(),200)        ;
+        assertEquals(response.contentType(),"application/json;charset=UTF-8");
+        assertTrue(response.body().asString().contains("Female"));
+        assertTrue(response.body().asString().contains("Janette"));
+    }
+
 
 
 
