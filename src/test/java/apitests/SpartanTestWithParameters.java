@@ -5,6 +5,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import utilities.ConfigurationReader;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class SpartanTestWithParameters {
 
     @BeforeClass
     public void setUpClass(){
-        RestAssured.baseURI = "http://54.161.128.36:8000/api";
+        RestAssured.baseURI = ConfigurationReader.get("spartanapi.uri");
 
     }
 
