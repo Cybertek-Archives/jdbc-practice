@@ -35,6 +35,27 @@ public class HRApiTestWithJsonPath {
         System.out.println("countryIds.size = " + countryIds.size());
         System.out.println("countryIds = " + countryIds);
 
+        //get countryNames off all countries in region id 2
+        List<String> countryNamewithRegion2 = jsonData.getList("items.findAll {it.region_id==2}.country_name");
+        System.out.println("countryNamewithRegion2 = " + countryNamewithRegion2);
+    }
+
+    @Test
+    public void findAllEmployeesExample(){
+        //request
+        Response response = given().queryParam("limit",150).get("/employees");
+
+        //put response body to JsonPath object
+        JsonPath jsonData = response.jsonPath();
+
+        //get me all first_name of employees who is working as IT_PROG
+        List<String> firstnames = jsonData.getList("items.findAll {it.job_id ==\"IT_PROG\"}.first_name");
+        System.out.println("firstnames = " + firstnames);
+
+        //get me all first_name of employees who is making more than 5k
+        List<String> firstnames2 = jsonData.getList("items.findAll {it.salary > 5000}.first_name");
+        System.out.println("firstnames2 = " + firstnames2);
+
     }
 
 }
