@@ -1,9 +1,11 @@
 package Day6_gson;
 
+import com.google.gson.Gson;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -59,11 +61,50 @@ public class POJO_deserialize {
 
         System.out.println(regions.getItems().get(0).getRegionName());
 
+
         for (Item item : regionList) {
             System.out.println(item.getRegionName());
         }
 
+
     }
+
+    @Test
+    public void GsonExample(){
+
+        //creating gson object
+        Gson gson = new Gson();
+
+        //De-Serialize and serialize with gson object
+        //Deseriailze -->JSON TO Java Object
+
+        String myjson = "{\n" +
+                "    \"id\": 15,\n" +
+                "    \"name\": \"Meta\",\n" +
+                "    \"gender\": \"Female\",\n" +
+                "    \"phone\": 1938695106\n" +
+                "}";
+
+        //converting json to pojo(Spartan class)
+         Spartan spartan15= gson.fromJson(myjson,Spartan.class);
+
+        System.out.println("spartan15.getName() = " + spartan15.getName());
+        System.out.println("spartan15.getPhone() = " + spartan15.getPhone());
+        //-----------------------SERIALIZATION-------------
+        //Java object to JSON
+        Spartan spartanEU = new Spartan(10,"Mike","Male",5714788554L);
+        //it will take spartan eu information and convert to json
+        String jsonSpartanEU = gson.toJson(spartanEU);
+
+        System.out.println("jsonSpartanEU = " + jsonSpartanEU);
+
+
+
+
+
+    }
+
+
 
 
 
