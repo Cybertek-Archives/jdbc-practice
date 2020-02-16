@@ -69,7 +69,21 @@ public class JsonToJavaCollections {
         Response response = get("http://54.161.128.36:1000/ords/hr/regions");
         assertEquals(response.statusCode(),200);
 
-        System.out.println(response.prettyPrint());
+        Map<String,Object> regionMap = response.body().as(Map.class);
+
+        System.out.println(regionMap.get("limit"));
+        System.out.println("regionMap.get(\"count\") = " + regionMap.get("count"));
+        System.out.println("regionMap = " + regionMap.get("items"));
+
+        List<Map<String,Object>> itemsList = (List<Map<String, Object>>) regionMap.get("items");
+
+        String region_name = (String) itemsList.get(0).get("region_name");
+        System.out.println("region_name = " + region_name);
+
+
+        //break until 11:25
+
+
     }
 
 
